@@ -131,12 +131,18 @@ define('forum/register', [
                 if (results.every(obj => obj.status === 'rejected')) {
                     showSuccess(username_notify, successIcon);
                 } else {
-                    showError(username_notify, '[[error:username-taken]]');
+                    const newUsername = suggestUsername(username);
+                    showError(username_notify, '[[error:username-taken. maybe-try-${newUsername}]]');
+                    $('#username').val(newUsername);
                 }
 
                 callback();
             });
         }
+    }
+
+    function suggestUsername(username) {
+        return username + 123;
     }
 
     function validatePassword(password, password_confirm) {
